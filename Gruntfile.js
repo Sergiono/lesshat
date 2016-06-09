@@ -2,8 +2,9 @@ module.exports = function (grunt) {
 	/**
 	 * Load tasks
 	 */
-	grunt.loadNpmTasks('lesshat-devstack');
+	grunt.loadTasks('./tasks');
 	grunt.loadNpmTasks('grunt-prompt');
+	grunt.loadNpmTasks('grunt-mocha-test');
 
 	/**
 	 * Grunt config
@@ -85,6 +86,12 @@ module.exports = function (grunt) {
 					]
 				}
 			}
+		},
+		
+		mochaTest: {
+			test: {
+				src: ['mixins/**/test.js']
+			}
 		}
 	});
 
@@ -93,9 +100,10 @@ module.exports = function (grunt) {
 	 */
 
 	grunt.registerTask('version', ['prompt:version', 'iterate', 'build', 'mixins_update']);
+	grunt.registerTask('test', ['mochaTest']);
 	grunt.registerTask('dev', ['build', 'test']);
 	grunt.registerTask('generate', ['prompt:generate', 'generator']);
-	grunt.registerTask('contrib', ['build', 'test', 'mixins_update', 'prefix', 'documentation']);
-	grunt.registerTask('default', ['version', 'build', 'test', 'mixins_update', 'prefix', 'documentation', 'git']);
+	grunt.registerTask('contrib', ['build', 'test', 'mixins_update', 'prefix']);
+	grunt.registerTask('default', ['version', 'build', 'test', 'mixins_update', 'prefix']);
 
 };
